@@ -1,3 +1,6 @@
+#ifndef MAPPA_H
+#define MAPPA_H
+
 #include <iostream>
 #include <string>
 #include <list>
@@ -13,7 +16,7 @@ private:
 public:
 	Mappa(string dirName);
 	~Mappa();
-	
+
 	string getName();
 	list<string> list();
 	Mappa* search(string dirName);
@@ -21,3 +24,4 @@ public:
 };
 
 
+#endif // MAPPA_H
