@@ -2,7 +2,7 @@
 
 Mappa::Mappa(string dirName)
 {
-
+    name=dirName;
 }
 
 Mappa::~Mappa()
@@ -14,31 +14,33 @@ string Mappa::getName() {
 }
 
 list<string> Mappa::list() {
-	if (content.size() == 1) cout << "/" << endl;
-	string cell = "";
-	for (auto& iter : content)
+   /* string cell = "";
+    list<string> kids;
+
+	for (auto& iter : kids)
 	{
 		cell += "/" + iter->getName();
+
 	}
-	cout << cell << endl;
+
+	return kids;*/
 }
 
 Mappa* Mappa::search(string dirName) {
-	if (content.size() == 1) cout << "/" << endl;
+	if (content.size() == 1) return nullptr;
 
 	for (auto& iter : content)
 	{
-		if(( iter->getName())==dirName)
-            {cout<<"siker"<<endl;
-        }
-		else return false;
+		if(( iter->getName())==dirName) return iter;
+
 	}
+	 return nullptr;
 
 }
 
 bool Mappa::makeDirectory(string dirName) {
-	if (content.back()->search(dirName) != nullptr) {
-		content.back()->getName();
+	if (this->search(dirName) != nullptr) {
+		content.push_back(new Mappa(dirName));
 		return true;
 	}
 	return false;
