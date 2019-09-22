@@ -15,7 +15,7 @@ string Terminal::pwd()
 	string path = "";
 	for (auto& iter : workingDirectory)
 	{
-		path += "/" + iter->getName();
+		if(iter->getName() != "/") path += "/" + iter->getName();
 	}
 	return path;
 }
@@ -42,10 +42,7 @@ list<string> Terminal::ls()
 
 bool Terminal::mkdir(string dirName)
 {
-	if (workingDirectory.back()->search(dirName) != nullptr) {
-		workingDirectory.back()->makeDirectory(dirName);
-		return true;
-	}
+	if (workingDirectory.back()->makeDirectory(dirName)) return true;
 	return false;
 }
 
@@ -57,11 +54,13 @@ bool Terminal::processCmd(string command)
 		return true;
 	}
 	else if (args[0] == "cd") {
-		cd(args[1]);
-		return true;
+		return cd(args[1]);
 	}
 	else if (args[0] == "mkdir") {
-		mkdir(args[1]);
+		return mkdir(args[1]);
+	}
+	else if (args[0] == "pwd") {
+		cout << pwd();
 		return true;
 	}
 	else return false;
@@ -80,5 +79,6 @@ vector<string> Terminal::split(string cmd)
 			temp += iter;
 		}
 	}
+	if (temp != "") args.push_back(temp);
 	return args;
 }
