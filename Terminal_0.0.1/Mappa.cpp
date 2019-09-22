@@ -14,16 +14,14 @@ string Mappa::getName() {
 }
 
 list<string> Mappa::list() {
-   /* string cell = "";
-    list<string> kids;
-
-	for (auto& iter : kids)
+    string cell="";
+    ::list<string> kids;
+    for (auto& iter : content)
 	{
-		cell += "/" + iter->getName();
-
+		kids.push_back(iter->getName());
 	}
 
-	return kids;*/
+	return kids;
 }
 
 Mappa* Mappa::search(string dirName) {
