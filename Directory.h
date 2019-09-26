@@ -21,6 +21,8 @@ public:
 	list<string> list();
 	Mappa* search(string dirName);
 	bool makeDirectory(string dirName);
+	bool removeDirectory();
+	bool removeRecursiveDirectory();
 };
 
 

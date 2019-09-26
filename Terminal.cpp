@@ -48,6 +48,7 @@ bool Terminal::mkdir(string dirName)
 
 bool Terminal::processCmd(string command)
 {
+	if (command == "") return true;
 	vector<string> args = split(command);
 	if (args[0] == "ls") {
 		for (auto iter : ls()) cout << iter << endl;
