@@ -50,19 +50,25 @@ bool Terminal::processCmd(string command)
 {
 	if (command == "") return true;
 	vector<string> args = split(command);
-	if (args[0] == "ls") {
+	if (args.size() == 1 && args[0] == "ls") {
 		for (auto iter : ls()) cout << iter << endl;
 		return true;
 	}
-	else if (args[0] == "cd") {
+	else if (args.size() == 2 && args[0] == "cd") {
 		return cd(args[1]);
 	}
-	else if (args[0] == "mkdir") {
+	else if (args.size() == 2 && args[0] == "mkdir") {
 		return mkdir(args[1]);
 	}
-	else if (args[0] == "pwd") {
+	else if (args.size() == 1 && args[0] == "pwd") {
 		cout << pwd();
 		return true;
+	}
+	else if (args.size() == 2 && args[0] == "rm") {
+		return workingDirectory.back()->removeDirectory(args[1]);
+	}
+	else if (args.size() == 3 && args[0] == "rm" && args[1] == "-rf") {
+		return workingDirectory.back()->removeRecursiveDirectory(args[2]);
 	}
 	else return false;
 }
