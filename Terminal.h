@@ -3,7 +3,7 @@
 #include <list>
 #include <vector>
 
-#include "Mappa.h"
+#include "Directory.h"
 
 using namespace std;
 
@@ -23,5 +23,6 @@ private:
 	Mappa* root;
 	vector<string> split(string cmd);
 };
+
 
 

@@ -1,4 +1,4 @@
-#include "Mappa.h"
+#include "Directory.h"
 
 Mappa::Mappa(string dirName)
 {
@@ -14,7 +14,6 @@ string Mappa::getName() {
 }
 
 list<string> Mappa::list() {
-    string cell="";
     ::list<string> kids;
     for (auto& iter : content)
 	{
@@ -40,3 +39,45 @@ bool Mappa::makeDirectory(string dirName) {
 	}
 	return false;
 }
+
+/*bool Mappa:: removeDirectory(string dirName){
+    for (auto& iter : content)
+  	{
+  	    if(iter->getName()==dirName){
+            content.remove(iter);
+            return true;
+  	    }
+  	    else{return false;}
+	}
+
+}*/
+bool Mappa:: removeDirectory(string dirName){
+    Mappa* iter=this->search(dirName);
+
+
+  	    if(iter!=nullptr){
+            content.remove(iter);
+            return true;
+  	    }
+  	    else{return false;}
+
+
+}
+
+/*bool Mappa:: removeRecursiveDirectory(string dirName){
+
+    for (auto& iter : content)
+  	{
+  	    while(iter!=nullptr){
+            removeRecursiveDirectory(string dirName);
+            iter++;
+        }
+         if(iter->getName()==dirName){
+            content.remove(iter);
+            return true;
+  	    }
+  	    else{return false;}
+
+  	}
+
+  }*/

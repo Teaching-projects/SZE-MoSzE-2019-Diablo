@@ -1,9 +1,10 @@
-#ifndef MAPPA_H
-#define MAPPA_H
+#ifndef DIRECTORY_H
+#define DIRECTORY_H
 
 #include <iostream>
 #include <string>
 #include <list>
+#include <math.h>
 
 using namespace std;
 
@@ -21,9 +22,10 @@ public:
 	list<string> list();
 	Mappa* search(string dirName);
 	bool makeDirectory(string dirName);
-	bool removeDirectory();
-	bool removeRecursiveDirectory();
+	bool removeDirectory(string dirName);
+	bool removeRecursiveDirectory(string dirName);
 };
 
 
-#endif // MAPPA_H
+#endif // DIRECTORY_H
+

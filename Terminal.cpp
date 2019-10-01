@@ -67,9 +67,9 @@ bool Terminal::processCmd(string command)
 	else if (args.size() == 2 && args[0] == "rm") {
 		return workingDirectory.back()->removeDirectory(args[1]);
 	}
-	else if (args.size() == 3 && args[0] == "rm" && args[1] == "-rf") {
+	/*else if (args.size() == 3 && args[0] == "rm" && args[1] == "-rf") {
 		return workingDirectory.back()->removeRecursiveDirectory(args[2]);
-	}
+	}*/
 	else return false;
 }
 
