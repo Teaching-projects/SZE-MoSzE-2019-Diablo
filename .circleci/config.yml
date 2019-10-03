@@ -6,14 +6,10 @@ jobs:
     steps:
       - checkout
       - run: 'g++ main.cpp'
-      - persist_to_workspace:
-        paths: a.out
   test:
     machine:
       image: ubuntu-1604:201903-01
     steps:
-      - attach_workspace:
-        at: .
       - run: 'a.out < mkdir valami'
 
 workflows:
