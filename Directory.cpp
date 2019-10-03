@@ -13,6 +13,15 @@ string Mappa::getName() {
 	return name;
 }
 
+void Mappa:: recurciveDelete(){
+
+    for(auto& iter : content) {
+        iter->recurciveDelete();
+        content.remove(iter);
+    }
+}
+
+
 list<string> Mappa::list() {
     ::list<string> kids;
     for (auto& iter : content)
@@ -40,22 +49,15 @@ bool Mappa::makeDirectory(string dirName) {
 	return false;
 }
 
-/*bool Mappa:: removeDirectory(string dirName){
-    for (auto& iter : content)
-  	{
-  	    if(iter->getName()==dirName){
-            content.remove(iter);
-            return true;
-  	    }
-  	    else{return false;}
-	}
+bool Mappa:: hasChild(){
+    return content.size()>0;
+}
 
-}*/
 bool Mappa:: removeDirectory(string dirName){
     Mappa* iter=this->search(dirName);
+    bool Child=iter->hasChild();
 
-
-  	    if(iter!=nullptr){
+  	    if(iter!=nullptr && Child==false){
             content.remove(iter);
             return true;
   	    }
@@ -64,20 +66,11 @@ bool Mappa:: removeDirectory(string dirName){
 
 }
 
-/*bool Mappa:: removeRecursiveDirectory(string dirName){
+bool Mappa:: removeRecursiveDirectory(string dirName){
+    Mappa* iter=this->search(dirName);
+    iter->recurciveDelete();
+    content.remove(iter);
 
-    for (auto& iter : content)
-  	{
-  	    while(iter!=nullptr){
-            removeRecursiveDirectory(string dirName);
-            iter++;
-        }
-         if(iter->getName()==dirName){
-            content.remove(iter);
-            return true;
-  	    }
-  	    else{return false;}
+    return true;
 
-  	}
-
-  }*/
+  }
