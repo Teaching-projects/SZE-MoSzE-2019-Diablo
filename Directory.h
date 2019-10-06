@@ -21,7 +21,7 @@ public:
 
     void recurciveDelete();
 	string getName();
-	list<string> list();
+	list<string> ls();
 	Mappa* search(string dirName);
 	bool makeDirectory(string dirName);
 	bool hasChild();

@@ -2,7 +2,7 @@
 
 Mappa::Mappa(string dirName)
 {
-    name=dirName;
+	name = dirName;
 }
 
 Mappa::~Mappa()
@@ -13,18 +13,20 @@ string Mappa::getName() {
 	return name;
 }
 
-void Mappa:: recurciveDelete(){
+void Mappa::recurciveDelete() {
 
-    for(auto& iter : content) {
-        iter->recurciveDelete();
-        content.remove(iter);
-    }
+	for (auto iter = content.begin(); iter != content.end();) {
+		auto toDelete = iter;
+		++iter;
+		(*toDelete)->recurciveDelete();
+		content.remove(*toDelete);
+	}
 }
 
 
-list<string> Mappa::list() {
-    ::list<string> kids;
-    for (auto& iter : content)
+list<string> Mappa::ls() {
+	::list<string> kids;
+	for (auto& iter : content)
 	{
 		kids.push_back(iter->getName());
 	}
@@ -36,9 +38,9 @@ Mappa* Mappa::search(string dirName) {
 
 	for (auto& iter : content)
 	{
-		if(( iter->getName())==dirName) return iter;
+		if ((iter->getName()) == dirName) return iter;
 	}
-	 return nullptr;
+	return nullptr;
 }
 
 bool Mappa::makeDirectory(string dirName) {
@@ -49,28 +51,28 @@ bool Mappa::makeDirectory(string dirName) {
 	return false;
 }
 
-bool Mappa:: hasChild(){
-    return content.size()>0;
+bool Mappa::hasChild() {
+	return content.size() > 0;
 }
 
-bool Mappa:: removeDirectory(string dirName){
-    Mappa* iter=this->search(dirName);
-    bool Child=iter->hasChild();
+bool Mappa::removeDirectory(string dirName) {
+	Mappa* iter = this->search(dirName);
+	bool Child = iter->hasChild();
 
-  	    if(iter!=nullptr && Child==false){
-            content.remove(iter);
-            return true;
-  	    }
-  	    else{return false;}
+	if (iter != nullptr && Child == false) {
+		content.remove(iter);
+		return true;
+	}
+	else { return false; }
 
 
 }
 
-bool Mappa:: removeRecursiveDirectory(string dirName){
-    Mappa* iter=this->search(dirName);
-    iter->recurciveDelete();
-    content.remove(iter);
+bool Mappa::removeRecursiveDirectory(string dirName) {
+	Mappa* iter = this->search(dirName);
+	iter->recurciveDelete();
+	content.remove(iter);
 
-    return true;
+	return true;
 
-  }
+}
