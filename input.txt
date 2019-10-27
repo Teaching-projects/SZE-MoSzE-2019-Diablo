@@ -1,0 +1,12 @@
+mkdir elso
+cd elso
+touch fajl.txt
+echo "Some-content" > fajl.txt
+cd ..
+mkdir masodik
+ls
+rm elso
+rm masodik
+rm -rf elso
+ls
+exit

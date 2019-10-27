@@ -16,7 +16,10 @@ int main() {
 		getline(cin, cmd);
 		if (cmd == "exit") exit = true;
 		else {
+			cout << endl;
 			if (!terminal->processCmd(cmd)) cout << "Error!" << endl;
 		}
 	} while (!exit);
+	delete terminal;
+	return 0;
 }
