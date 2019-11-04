@@ -6,21 +6,25 @@ Directory::Directory(string dirName)
 }
 
 Directory::~Directory()
-{ }
+{
+	this->recursiveDelete();
+}
 
 
 string Directory::getName() {
 	return name;
 }
 
-void Directory::recurciveDelete() {
-
-	for (auto iter = content.begin(); iter != content.end();) {
-		auto toDelete = iter;
-		++iter;
-		(*toDelete)->recurciveDelete();
-		content.remove(*toDelete);
+void Directory::recursiveDelete() {
+	for (auto i : files) {
+		delete i;
 	}
+	files.clear();
+	for (auto i : content) {
+		i->recursiveDelete();
+		delete i;
+	}
+	content.clear();
 }
 
 
@@ -37,9 +41,7 @@ list<string> Directory::ls() {
 	return kids;
 }
 
-Directory* Directory::search(string dirName) {
-	if (content.size() == 0) return nullptr;
-
+Directory* Directory::searchDir(string dirName) {
 	for (auto& iter : content)
 	{
 		if ((iter->getName()) == dirName) return iter;
@@ -48,7 +50,7 @@ Directory* Directory::search(string dirName) {
 }
 
 bool Directory::makeDirectory(string dirName) {
-	if (this->search(dirName) == nullptr) {
+	if (this->searchDir(dirName) == nullptr) {
 		content.push_back(new Directory(dirName));
 		return true;
 	}
@@ -59,36 +61,31 @@ bool Directory::hasChild() {
 	return content.size() > 0 || files.size() > 0;
 }
 
-bool Directory::remove(string name) {
+bool Directory::remove(string name, bool recursive) {
 	File* f = this->searchFile(name);
 	if (f != nullptr) {
+		delete f;
 		files.remove(f);
 		return true;
 	}
-
-	Directory* iter = this->search(name);
-	bool Child = iter->hasChild();
-
-	if (iter != nullptr && Child == false) {
-		content.remove(iter);
-		return true;
+	Directory* d = this->searchDir(name);
+	if (d != nullptr) {
+		if (!d->hasChild()) {
+			delete d;
+			content.remove(d);
+			return true;
+		}
+		else if (recursive) {
+			delete d;
+			content.remove(d);
+			return true;
+		}
+		else return false;
 	}
-	else { return false; }
+	else return false;
 }
 
-bool Directory::removeRecursiveDirectory(string dirName) {
-	files.clear();
-	Directory* iter = this->search(dirName);
-	iter->recurciveDelete();
-	content.remove(iter);
-
-	return true;
-
-}
-
-File* Directory::searchFile(string fileName)
-{
-	if (files.size() == 0) return nullptr;
+File* Directory::searchFile(string fileName) {
 	for (auto& iter : files)
 	{
 		if ((iter->getName()) == fileName) return iter;
@@ -96,9 +93,8 @@ File* Directory::searchFile(string fileName)
 	return nullptr;
 }
 
-bool Directory::makeFile(string fileName)
-{
-	if (this->search(fileName) == nullptr && this->searchFile(fileName) == nullptr) {
+bool Directory::makeFile(string fileName) {
+	if (this->searchDir(fileName) == nullptr && this->searchFile(fileName) == nullptr) {
 		files.push_back(new File(fileName));
 		return true;
 	}

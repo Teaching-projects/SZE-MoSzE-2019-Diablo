@@ -29,7 +29,7 @@ bool Terminal::cd(string dirName)
 		workingDirectory.pop_back();
 		return true;
 	}
-	Directory* toDir = workingDirectory.back()->search(dirName);
+	Directory* toDir = workingDirectory.back()->searchDir(dirName);
 	if (toDir != nullptr) {
 		workingDirectory.push_back(toDir);
 		return true;
@@ -83,10 +83,10 @@ bool Terminal::processCmd(string command)
 		return true;
 	}
 	else if (args.size() == 2 && args[0] == "rm") {
-		return workingDirectory.back()->remove(args[1]);
+		return workingDirectory.back()->remove(args[1], false);
 	}
 	else if (args.size() == 3 && args[0] == "rm" && args[1] == "-rf") {
-		return workingDirectory.back()->removeRecursiveDirectory(args[2]);
+		return workingDirectory.back()->remove(args[2], true);
 	}
 	else if (args.size() == 2 && args[0] == "touch") {
 		return touch(args[1]);

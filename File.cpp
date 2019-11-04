@@ -6,7 +6,7 @@ File::File(string fName){
 
 File::~File(){}
 
-string File:: getName(){
+string File:: getName() const {
     return name;
 }
 

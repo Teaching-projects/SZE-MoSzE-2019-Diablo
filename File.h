@@ -13,7 +13,7 @@ private:
 public:
     File(string fName);
     ~File();
-    string getName();
+    string getName() const;
 	void setContent(string text);
 };
 

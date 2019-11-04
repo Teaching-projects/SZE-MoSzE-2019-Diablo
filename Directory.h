@@ -20,16 +20,16 @@ public:
 	Directory(string dirName);
 	~Directory();
 
-    void recurciveDelete();
+    void recursiveDelete();
 	string getName();
 	list<string> ls();
-	Directory* search(string dirName);
+	Directory* searchDir(string dirName);
 	File* searchFile(string fileName);
 	bool makeDirectory(string dirName);
 	bool makeFile(string fileName);
 	bool hasChild();
-	bool remove(string dirName);
-	bool removeRecursiveDirectory(string dirName);
+	bool remove(string dirName, bool recursive);
+	//bool removeRecursiveDirectory(string dirName);
 };
 
 
