@@ -1,41 +1,47 @@
 #include "Directory.h"
 
-Mappa::Mappa(string dirName)
+Directory::Directory(string dirName)
 {
 	name = dirName;
 }
 
-Mappa::~Mappa()
-{ }
+Directory::~Directory()
+{
+	this->recursiveDelete();
+}
 
 
-string Mappa::getName() {
+string Directory::getName() {
 	return name;
 }
 
-void Mappa::recurciveDelete() {
-
-	for (auto iter = content.begin(); iter != content.end();) {
-		auto toDelete = iter;
-		++iter;
-		(*toDelete)->recurciveDelete();
-		content.remove(*toDelete);
+void Directory::recursiveDelete() {
+	for (auto i : files) {
+		delete i;
 	}
+	files.clear();
+	for (auto i : content) {
+		i->recursiveDelete();
+		delete i;
+	}
+	content.clear();
 }
 
 
-list<string> Mappa::ls() {
-	::list<string> kids;
+list<string> Directory::ls() {
+	list<string> kids;
 	for (auto& iter : content)
+	{
+		kids.push_back(iter->getName());
+	}
+	for (auto& iter : files)
 	{
 		kids.push_back(iter->getName());
 	}
 	return kids;
 }
 
-Mappa* Mappa::search(string dirName) {
-	if (content.size() == 0) return nullptr;
-
+Directory* Directory::searchDir(string dirName) {
 	for (auto& iter : content)
 	{
 		if ((iter->getName()) == dirName) return iter;
@@ -43,36 +49,54 @@ Mappa* Mappa::search(string dirName) {
 	return nullptr;
 }
 
-bool Mappa::makeDirectory(string dirName) {
-	if (this->search(dirName) == nullptr) {
-		content.push_back(new Mappa(dirName));
+bool Directory::makeDirectory(string dirName) {
+	if (this->searchDir(dirName) == nullptr) {
+		content.push_back(new Directory(dirName));
 		return true;
 	}
 	return false;
 }
 
-bool Mappa::hasChild() {
-	return content.size() > 0;
+bool Directory::hasChild() {
+	return content.size() > 0 || files.size() > 0;
 }
 
-bool Mappa::removeDirectory(string dirName) {
-	Mappa* iter = this->search(dirName);
-	bool Child = iter->hasChild();
-
-	if (iter != nullptr && Child == false) {
-		content.remove(iter);
+bool Directory::remove(string name, bool recursive) {
+	File* f = this->searchFile(name);
+	if (f != nullptr) {
+		delete f;
+		files.remove(f);
 		return true;
 	}
-	else { return false; }
-
-
+	Directory* d = this->searchDir(name);
+	if (d != nullptr) {
+		if (!d->hasChild()) {
+			delete d;
+			content.remove(d);
+			return true;
+		}
+		else if (recursive) {
+			delete d;
+			content.remove(d);
+			return true;
+		}
+		else return false;
+	}
+	else return false;
 }
 
-bool Mappa::removeRecursiveDirectory(string dirName) {
-	Mappa* iter = this->search(dirName);
-	iter->recurciveDelete();
-	content.remove(iter);
+File* Directory::searchFile(string fileName) {
+	for (auto& iter : files)
+	{
+		if ((iter->getName()) == fileName) return iter;
+	}
+	return nullptr;
+}
 
-	return true;
-
+bool Directory::makeFile(string fileName) {
+	if (this->searchDir(fileName) == nullptr && this->searchFile(fileName) == nullptr) {
+		files.push_back(new File(fileName));
+		return true;
+	}
+	return false;
 }

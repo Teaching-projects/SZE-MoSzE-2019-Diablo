@@ -2,12 +2,14 @@
 
 Terminal::Terminal()
 {
-	root = new Mappa("/");
+	root = new Directory("/");
 	workingDirectory.push_back(root);
 }
 
 Terminal::~Terminal()
-{ }
+{
+	delete root;
+}
 
 string Terminal::pwd()
 {
@@ -27,7 +29,7 @@ bool Terminal::cd(string dirName)
 		workingDirectory.pop_back();
 		return true;
 	}
-	Mappa* toDir = workingDirectory.back()->search(dirName);
+	Directory* toDir = workingDirectory.back()->searchDir(dirName);
 	if (toDir != nullptr) {
 		workingDirectory.push_back(toDir);
 		return true;
@@ -44,6 +46,22 @@ bool Terminal::mkdir(string dirName)
 {
 	if (workingDirectory.back()->makeDirectory(dirName)) return true;
 	return false;
+}
+
+bool Terminal::touch(string fileName)
+{
+	if (workingDirectory.back()->makeFile(fileName)) return true;
+	return false;
+}
+
+bool Terminal::echo(string fileName, string text)
+{
+	File* f = workingDirectory.back()->searchFile(fileName);
+	if (f != nullptr) {
+		f->setContent(text);
+		return true;
+	}
+	else return false;
 }
 
 bool Terminal::processCmd(string command)
@@ -65,10 +83,16 @@ bool Terminal::processCmd(string command)
 		return true;
 	}
 	else if (args.size() == 2 && args[0] == "rm") {
-		return workingDirectory.back()->removeDirectory(args[1]);
+		return workingDirectory.back()->remove(args[1], false);
 	}
 	else if (args.size() == 3 && args[0] == "rm" && args[1] == "-rf") {
-		return workingDirectory.back()->removeRecursiveDirectory(args[2]);
+		return workingDirectory.back()->remove(args[2], true);
+	}
+	else if (args.size() == 2 && args[0] == "touch") {
+		return touch(args[1]);
+	}
+	else if (args.size() == 4 && args[0] == "echo" && args[1][0] == '"' && args[1][args[1].size() - 1] == '"' && args[2] == ">") {
+		return echo(args[3], args[1]);
 	}
 	else return false;
 }
