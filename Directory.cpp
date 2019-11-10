@@ -11,7 +11,7 @@ Directory::~Directory()
 }
 
 
-string Directory::getName() {
+string Directory::getName() const {
 	return name;
 }
 
@@ -27,20 +27,6 @@ void Directory::recursiveDelete() {
 	content.clear();
 }
 
-
-list<string> Directory::ls() {
-	list<string> kids;
-	for (auto& iter : content)
-	{
-		kids.push_back(iter->getName());
-	}
-	for (auto& iter : files)
-	{
-		kids.push_back(iter->getName());
-	}
-	return kids;
-}
-
 Directory* Directory::searchDir(string dirName) {
 	for (auto& iter : content)
 	{
@@ -54,7 +40,7 @@ bool Directory::makeDirectory(string dirName) {
 		content.push_back(new Directory(dirName));
 		return true;
 	}
-	return false;
+	throw runtime_error("File or directory already exist!");
 }
 
 bool Directory::hasChild() {
@@ -80,9 +66,9 @@ bool Directory::remove(string name, bool recursive) {
 			content.remove(d);
 			return true;
 		}
-		else return false;
+		else throw runtime_error("Directory is not empty!");
 	}
-	else return false;
+	else throw runtime_error("File or directory does not exist!");
 }
 
 File* Directory::searchFile(string fileName) {
@@ -98,5 +84,5 @@ bool Directory::makeFile(string fileName) {
 		files.push_back(new File(fileName));
 		return true;
 	}
-	return false;
+	throw runtime_error("File or directory already exists!");
 }

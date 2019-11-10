@@ -17,7 +17,14 @@ int main() {
 		if (cmd == "exit") exit = true;
 		else {
 			cout << endl;
-			if (!terminal->processCmd(cmd)) cout << "Error!" << endl;
+			try
+			{
+				terminal->processCmd(cmd);
+			}
+			catch (const exception& e)
+			{
+				cerr << e.what() << endl;
+			}
 		}
 	} while (!exit);
 	delete terminal;
