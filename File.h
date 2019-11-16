@@ -11,7 +11,7 @@ private:
     string content;
 
 public:
-    File(string fName);
+    File(string fName, string content = "");
     ~File();
     string getName() const;
 	void setContent(string text);

@@ -26,7 +26,7 @@ public:
 	Directory* searchDir(string dirName);
 	File* searchFile(string fileName);
 	bool makeDirectory(string dirName);
-	bool makeFile(string fileName);
+	bool makeFile(string fileName, string content = "");
 	bool hasChild();
 	bool remove(string dirName, bool recursive);
 };
