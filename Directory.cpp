@@ -42,7 +42,7 @@ bool Directory::makeDirectory(string dirName) {
 		content.push_back(new Directory(dirName));
 		return true;
 	}
-	throw exception("File or directory already exist!");
+	throw runtime_error("File or directory already exist!");
 }
 
 bool Directory::hasChild() {
@@ -68,9 +68,9 @@ bool Directory::remove(string name, bool recursive) {
 			content.remove(d);
 			return true;
 		}
-		else throw exception("Directory is not empty!");
+		else throw runtime_error("Directory is not empty!");
 	}
-	else throw exception("File or directory does not exist!");
+	else throw runtime_error("File or directory does not exist!");
 }
 
 File* Directory::searchFile(string fileName) {
@@ -86,5 +86,5 @@ bool Directory::makeFile(string fileName, string content) {
 		files.push_back(new File(fileName, content));
 		return true;
 	}
-	throw exception("File or directory already exists!");
+	throw runtime_error("File or directory already exists!");
 }

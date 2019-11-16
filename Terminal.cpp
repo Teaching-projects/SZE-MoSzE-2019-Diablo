@@ -27,7 +27,7 @@ string Terminal::pwd()
 
 bool Terminal::cd(vector<Directory*> dir)
 {
-	if (dir.empty()) throw exception("No such file or directory!");
+	if (dir.empty()) throw runtime_error("No such file or directory!");
 	else {
 		workingDirectory = dir;
 		return true;
@@ -36,7 +36,7 @@ bool Terminal::cd(vector<Directory*> dir)
 
 bool Terminal::ls(vector<Directory*> dir)
 {
-	if (dir.empty()) throw exception("No such file or directory!");
+	if (dir.empty()) throw runtime_error("No such file or directory!");
 	else {
 		cout << dir.back();
 		return true;
@@ -45,7 +45,7 @@ bool Terminal::ls(vector<Directory*> dir)
 
 bool Terminal::mkdir(vector<Directory*> dir, string dirName)
 {
-	if (dir.empty()) throw exception("No such file or directory!");
+	if (dir.empty()) throw runtime_error("No such file or directory!");
 	else {
 		return dir.back()->makeDirectory(dirName);
 	}
@@ -53,7 +53,7 @@ bool Terminal::mkdir(vector<Directory*> dir, string dirName)
 
 bool Terminal::touch(vector<Directory*> dir, string fileName)
 {
-	if (dir.empty()) throw exception("No such file or directory!");
+	if (dir.empty()) throw runtime_error("No such file or directory!");
 	else {
 		return dir.back()->makeFile(fileName);;
 	}
@@ -61,7 +61,7 @@ bool Terminal::touch(vector<Directory*> dir, string fileName)
 
 bool Terminal::echo(vector<Directory*> dir, string fileName, string text)
 {
-	if(dir.empty()) throw exception("No such file or directory!");
+	if(dir.empty()) throw runtime_error("No such file or directory!");
 	else {
 		File* f = dir.back()->searchFile(fileName);
 		if (f != nullptr) f->setContent(text);
@@ -163,7 +163,7 @@ bool Terminal::processCmd(string command)
 		else if (p.front() == "/" && p.size() < 2) return echo(vector<Directory*>{ root }, fileName, args[1]);
 		else return echo(followPath(p), fileName, args[1]);
 	}
-	else throw exception("Unrecognized command or missing parameter!");
+	else throw runtime_error("Unrecognized command or missing parameter!");
 }
 
 vector<string> Terminal::split(string cmd)
