@@ -8,7 +8,7 @@ root@adam-niki-PC:/#
 elso
 masodik
 root@adam-niki-PC:/#
-Error!
+Directory is not empty!
 root@adam-niki-PC:/#
 root@adam-niki-PC:/#
 root@adam-niki-PC:/#

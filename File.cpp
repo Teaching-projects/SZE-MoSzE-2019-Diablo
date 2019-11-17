@@ -1,8 +1,6 @@
 #include "File.h"
 
-File::File(string fName){
-    name = fName;
-}
+File::File(string fName, string content) : name(fName), content(content) {}
 
 File::~File(){}
 

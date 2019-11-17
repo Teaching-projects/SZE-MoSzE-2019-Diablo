@@ -21,16 +21,20 @@ public:
 	~Directory();
 
     void recursiveDelete();
-	string getName();
-	list<string> ls();
+	string getName() const;
+	friend ostream& operator<<(ostream& cout, Directory* dir);
 	Directory* searchDir(string dirName);
 	File* searchFile(string fileName);
 	bool makeDirectory(string dirName);
-	bool makeFile(string fileName);
+	bool makeFile(string fileName, string content = "");
 	bool hasChild();
 	bool remove(string dirName, bool recursive);
-	//bool removeRecursiveDirectory(string dirName);
 };
 
+inline ostream& operator<<(ostream& cout, Directory* dir) {
+	for (auto& i : dir->content) cout << i->getName() << endl;
+	for (auto& i : dir->files) cout << i->getName() << endl;
+	return cout;
+}
 
 #endif
