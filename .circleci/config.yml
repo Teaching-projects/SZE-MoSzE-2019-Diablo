@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
   build:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+       - image: szediablo/build-image:latest
     steps:
       - checkout
       - run: 'g++ -std=c++11 main.cpp Directory.cpp Terminal.cpp File.cpp'
