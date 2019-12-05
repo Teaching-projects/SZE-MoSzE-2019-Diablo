@@ -1,5 +1,9 @@
-FROM ubuntu
+FROM debian
 
-RUN apt-get update && apt-get install -y gcc && \
-	apt-get autoclean
+RUN apt-get update && apt-get install -y\
+	gcc\
+	git\
+	make\
+	&& apt-get autoclean
+
 
