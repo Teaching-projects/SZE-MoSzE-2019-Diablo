@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
 Terminal::Terminal()
 {
@@ -61,7 +62,7 @@ bool Terminal::touch(vector<Directory*> dir, string fileName)
 
 bool Terminal::echo(vector<Directory*> dir, string fileName, string text)
 {
-	if(dir.empty()) throw runtime_error("No such file or directory!");
+	if (dir.empty()) throw runtime_error("No such file or directory!");
 	else {
 		File* f = dir.back()->searchFile(fileName);
 		if (f != nullptr) f->setContent(text);
@@ -173,4 +174,16 @@ vector<string> Terminal::split(string cmd)
 	string temp;
 	while (line >> temp) args.push_back(temp);
 	return args;
+}
+
+bool Terminal::WriteToFile() {
+	ofstream f;
+	string s = root->makeString();
+	f.open("myfile.txt");
+	if (f.is_open()) {
+		f << s;
+		f.close();
+		return true;
+	}
+	return false;
 }

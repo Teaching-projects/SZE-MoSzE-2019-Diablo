@@ -15,6 +15,7 @@ public:
 	~Terminal();
 	string pwd();
 	bool processCmd(string command);
+	bool WriteToFile();
 
 private:
 	vector<Directory*> workingDirectory;
