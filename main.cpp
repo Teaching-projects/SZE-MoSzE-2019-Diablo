@@ -8,6 +8,7 @@ using namespace std;
 
 int main() {
 	Terminal* terminal = new Terminal();
+
 	bool exit = false;
 	do
 	{
@@ -16,7 +17,18 @@ int main() {
 		getline(cin, cmd);
 		if (cmd == "exit") exit = true;
 		else {
-			if (!terminal->processCmd(cmd)) cout << "Error!" << endl;
+			cout << endl;
+			try
+			{
+				terminal->processCmd(cmd);
+			}
+			catch (const exception& e)
+			{
+				cerr << e.what() << endl;
+			}
 		}
 	} while (!exit);
+	terminal->WriteToFile();
+	delete terminal;
+	return 0;
 }

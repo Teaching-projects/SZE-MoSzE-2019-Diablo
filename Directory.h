@@ -4,31 +4,39 @@
 #include <iostream>
 #include <string>
 #include <list>
-#include <math.h>
+
+#include "File.h"
 
 using namespace std;
 
-class Mappa
+class Directory
 {
 private:
 	string name;
-	list<Mappa*> content;
-
+	list<Directory*> content;
+	list<File*> files;
 
 public:
-	Mappa(string dirName);
-	~Mappa();
+	Directory(string dirName);
+	~Directory();
 
-    void recurciveDelete();
-	string getName();
-	list<string> ls();
-	Mappa* search(string dirName);
+	void recursiveDelete();
+	string getName() const;
+	friend ostream& operator<<(ostream& cout, Directory* dir);
+	Directory* searchDir(string dirName);
+	File* searchFile(string fileName);
 	bool makeDirectory(string dirName);
+	bool makeFile(string fileName, string content = "");
 	bool hasChild();
-	bool removeDirectory(string dirName);
-	bool removeRecursiveDirectory(string dirName);
+	bool remove(string dirName, bool recursive);
+	string makeString();
+
 };
 
+inline ostream& operator<<(ostream& cout, Directory* dir) {
+	for (auto& i : dir->content) cout << i->getName() << endl;
+	for (auto& i : dir->files) cout << i->getName() << endl;
+	return cout;
+}
 
-#endif // DIRECTORY_H
-
+#endif
