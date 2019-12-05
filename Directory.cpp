@@ -93,8 +93,8 @@ bool Directory::makeFile(string fileName, string content) {
 string Directory::makeString() {
 	string s;
 	for (auto& iter : content) {
-		s = s + "-" + iter->getName();
-		s = s + iter->makeString() + "\n";
+		s = s + "-" + iter->getName() + "\n";
+		s = s + iter->makeString();
 	}
 	return s;
 }
