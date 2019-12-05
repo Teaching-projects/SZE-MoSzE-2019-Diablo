@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-       - image: szediablo/build-image:version2
+       - image: szediablo/build-image:debian-version1
     steps:
       - checkout
       - run: 'g++ -std=c++11 main.cpp Directory.cpp Terminal.cpp File.cpp'
