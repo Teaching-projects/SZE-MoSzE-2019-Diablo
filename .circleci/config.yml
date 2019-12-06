@@ -5,14 +5,14 @@ jobs:
        - image: szediablo/build-image:debian-version5
     steps:
       - checkout
-      - run: 'g++ -std=c++11 main.cpp Directory.cpp Terminal.cpp File.cpp'
+      - run: 'make'
       - persist_to_workspace:
           root: .
           paths:
             - a.out
   test:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+       - image: szediablo/build-image:debian-version5
     steps:
       - checkout
       - attach_workspace:
