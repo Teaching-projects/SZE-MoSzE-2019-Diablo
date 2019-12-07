@@ -25,7 +25,7 @@ jobs:
       - checkout
       - run: 'cd Doxygen && doxygen && make -C latex/.'
       - store_artifacts:
-          path: latex/refman.pdf
+          path: Doxygen/latex/refman.pdf
           destination: documentation.pdf
 
 workflows:
