@@ -5,12 +5,19 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: 'g++ -std=c++11 main.cpp Directory.cpp Terminal.cpp'
+      - run: 'make && make clean'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - a.out
   test:
     machine:
       image: ubuntu-1604:201903-01
     steps:
-      - run: 'a.out < mkdir valami'
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: './futtat.sh'
 
 workflows:
   version: 2
