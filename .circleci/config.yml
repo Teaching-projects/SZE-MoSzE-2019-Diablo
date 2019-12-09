@@ -5,7 +5,7 @@ jobs:
        - image: szediablo/mosze:build-image
     steps:
       - checkout
-      - run: 'make'
+      - run: 'g++ -std=c++11 main.cpp Directory.cpp Terminal.cpp File.cpp'
       - persist_to_workspace:
           root: .
           paths:
