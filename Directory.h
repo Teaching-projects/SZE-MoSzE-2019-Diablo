@@ -20,7 +20,7 @@ public:
 	Directory(string dirName);
 	~Directory();
 
-    void recursiveDelete();
+	void recursiveDelete();
 	string getName() const;
 	friend ostream& operator<<(ostream& cout, Directory* dir);
 	Directory* searchDir(string dirName);
@@ -29,6 +29,8 @@ public:
 	bool makeFile(string fileName, string content = "");
 	bool hasChild();
 	bool remove(string dirName, bool recursive);
+	string makeString();
+
 };
 
 inline ostream& operator<<(ostream& cout, Directory* dir) {

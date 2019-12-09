@@ -1,3 +1,4 @@
+
 #include <iostream>
 
 #include "Directory.h"
@@ -88,3 +89,13 @@ bool Directory::makeFile(string fileName, string content) {
 	}
 	throw runtime_error("File or directory already exists!");
 }
+
+string Directory::makeString() {
+	string s = "-";
+	for (auto& iter : content) {
+		s = s + "-" + iter->getName() + "\n";
+		iter->makeString();
+	}
+	return s;
+}
+

@@ -8,6 +8,7 @@ using namespace std;
 
 int main() {
 	Terminal* terminal = new Terminal();
+
 	bool exit = false;
 	do
 	{
@@ -27,6 +28,7 @@ int main() {
 			}
 		}
 	} while (!exit);
+	terminal->WriteToFile();
 	delete terminal;
 	return 0;
 }
