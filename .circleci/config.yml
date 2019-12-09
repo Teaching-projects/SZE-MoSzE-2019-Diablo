@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
   build:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+       - image: szediablo/mosze:build-image
     steps:
       - checkout
       - run: 'g++ -std=c++11 main.cpp Directory.cpp Terminal.cpp File.cpp'
@@ -11,19 +11,29 @@ jobs:
           paths:
             - a.out
   test:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+       - image: szediablo/mosze:build-image
     steps:
       - checkout
       - attach_workspace:
           at: .
       - run: './futtat.sh'
+  documentation:
+    docker:
+       - image: szediablo/mosze:doxygen-image
+    steps:
+      - checkout
+      - run: 'cd Doxygen && doxygen && make -C latex/.'
+      - store_artifacts:
+          path: Doxygen/latex/refman.pdf
+          destination: documentation.pdf
 
 workflows:
   version: 2
-  build_and_test:
+  build_and_test_and_document:
     jobs:
       - build
       - test:
           requires:
             - build
+      - documentation
