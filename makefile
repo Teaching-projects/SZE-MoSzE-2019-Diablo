@@ -6,6 +6,7 @@ a.out: $(OBJS)
 
 main.o: main.cpp
 	g++ -c main.cpp $(CXXFLAGS)
+
 Terminal.o: Terminal.cpp
 	g++ -c Terminal.cpp $(CXXFLAGS)
 
