@@ -109,6 +109,11 @@ vector<Directory*> Terminal::followPath(vector<string> path)
 	return actPath;
 }
 
+/*bool mv(vector<Directory*> path1, vector<Directory*> path2) {
+
+
+}*/
+
 bool Terminal::processCmd(string command)
 {
 	if (command == "") return true;
@@ -164,6 +169,12 @@ bool Terminal::processCmd(string command)
 		else if (p.front() == "/" && p.size() < 2) return echo(vector<Directory*>{ root }, fileName, args[1]);
 		else return echo(followPath(p), fileName, args[1]);
 	}
+	else if (args.size() == 2 && args[0]=="exit" && args[1]!=""){
+		WriteToFile(args[1]);
+	}
+	else if (args.size() == 1 && args[0] == "exit" ) {
+		WriteToFile("myfile.txt");
+	}
 	else throw runtime_error("Unrecognized command or missing parameter!");
 }
 
@@ -176,10 +187,10 @@ vector<string> Terminal::split(string cmd)
 	return args;
 }
 
-bool Terminal::WriteToFile() {
+bool Terminal::WriteToFile(string filename) {
 	ofstream f;
 	string s = root->makeString();
-	f.open("myfile.txt");
+	f.open(filename);
 	if (f.is_open()) {
 		f << s;
 		f.close();

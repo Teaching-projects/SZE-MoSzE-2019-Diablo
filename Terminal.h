@@ -15,7 +15,7 @@ public:
 	~Terminal();
 	string pwd();
 	bool processCmd(string command);
-	bool WriteToFile();
+	bool WriteToFile(string filename);
 
 private:
 	vector<Directory*> workingDirectory;
@@ -27,6 +27,7 @@ private:
 	bool mkdir(vector<Directory*> dir, string dirName);
 	bool touch(vector<Directory*> dir, string fileName);
 	bool echo(vector<Directory*> dir, string fileName, string text);
+	//bool mv(vector<Directory*> path1, vector<Directory*> path2);
 	vector<string> processPath(string path);
 	vector<Directory*> followPath(vector<string> path);
 };

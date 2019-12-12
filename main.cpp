@@ -10,12 +10,16 @@ int main() {
 	Terminal* terminal = new Terminal();
 
 	bool exit = false;
+	string isexit = "exit";
 	do
 	{
 		cout << endl << "root@adam-niki-PC:" << terminal->pwd() << "# ";
 		string cmd;
 		getline(cin, cmd);
-		if (cmd == "exit") exit = true;
+		if (cmd.find(isexit) != std::string::npos){
+			terminal->processCmd(cmd);
+			exit = true;
+		}
 		else {
 			cout << endl;
 			try
@@ -28,7 +32,6 @@ int main() {
 			}
 		}
 	} while (!exit);
-	terminal->WriteToFile();
 	delete terminal;
 	return 0;
 }
