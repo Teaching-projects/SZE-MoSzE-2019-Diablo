@@ -5,37 +5,37 @@
 using  namespace std;
 
 /**
-@brief: fájlokat megvalósító osztály
+@brief fájlokat megvalósító osztály
 */
 
 class File
 {
 private:
 	/**
-	@brief: fájlnév
+	@brief fájlnév
 	*/
     string name;
 	/**
-	@brief: fájl tartalma
+	@brief fájl tartalma
 	*/
     string content;
 
 public:
 	/**
-	@brief: fájl osztály konstruktora
+	@brief fájl osztály konstruktora
 	@param fName: fájl neve, kötelezõ
 	@param content: fájl tartalma egyetlen karakterláncban, nem kötelezõ
 	*/
     File(string fName, string content = "");
     ~File();
 	/**
-	@brief: getter fgv. a fájl nevéhez
-	@return: fájl neve
+	@brief getter függvény a fájl nevéhez
+	@return fájl neve
 	*/
     string getName() const;
 	/**
-	@brief: setter fgv. a fájl tartalmához
-	@param text: fájl tartalma egyetlen karakterláncban
+	@brief setter függvény a fájl tartalmához
+	@param text fájl tartalma egyetlen karakterláncban
 	*/
 	void setContent(string text);
 };
