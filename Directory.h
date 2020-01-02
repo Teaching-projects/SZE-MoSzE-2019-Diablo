@@ -54,7 +54,7 @@ public:
 	string getName() const;
 	/**
 	@brief barát << operátor a standard kimenetre vagy fájlba íratáshoz
-	@param cout elsõ operandus, ostream objektum referencia, hova írjuk ki, lehet ofstream, cout, cerr ...
+	@param cout elsõ operandus, hova írjuk ki a könyvtárat, lehet ofstream, cout, cerr ...
 	@param dir második operandus, a kiíratandó könyvtárra mutató pointer
 	@return paraméterként kapott ostream objektum referenciája
 	*/
@@ -62,41 +62,48 @@ public:
 	/**
 	@brief megkeresi, hogy van-e adott nevû alkönyvtár a mappában
 	@param dirName a keresendõ könyvtár neve
-	@return ha megtalálta, akkor az alkönyvtárra mutató pointer \n egyébként nullptr
+	@return az_alkönyvtárra_mutató_pointer, ha megtalálta
+	@return nullptr, egyébként
 	*/
 	Directory* searchDir(string dirName);
 	/**
 	@brief megkeresi, hogy van-e adott nevû fájl a mappában
 	@param fileName a keresendõ fájl neve
-	@return a fájlra mutató pointer ha megtalálta \n egyébként nullptr
+	@return a_fájlra_mutató_pointer, ha megtalálta
+	@return nullptr, egyébként
 	*/
 	File* searchFile(string fileName);
 	/**
 	@brief adott nevû alkönyvtárat hoz létre
 	@param dirName a létrehozandó alkönyvtár neve
-	@return true ha nincs még a megadott nevû alkönyvtár \n egyébként hibát dob
-	@throws runtime_error("File or directory already exist!") ha már létezik a megadott néven alkönyvtár
+	@return true, ha nincs még a megadott nevû alkönyvtár
+	@return hibát dob, egyébként
+	@throws runtime_error("File_or_directory_already_exist!") ha már létezik a megadott néven alkönyvtár
 	*/
 	bool makeDirectory(string dirName);
 	/**
 	@brief adott nevû fájlt hoz létre
 	@param fileName a létrehozandó fájl neve, kötelezõ
 	@param content a létrehozandó fájl tartalma, nem kötelezõ
-	@return true ha nincs még a megadott nevû fájl \n egyébként hibát dob
-	@throws runtime_error("File or directory already exist!") ha már létezik a megadott néven alkönyvtár
+	@return true, ha nincs még a megadott nevû fájl
+	@return hibát dob, egyébként
+	@throws runtime_error("File_or_directory_already_exist!") ha már létezik a megadott néven alkönyvtár
 	*/
 	bool makeFile(string fileName, string content = "");
 	/**
 	@brief ellenõrzi, hogy van-e a könyvtárnak gyereke (alkönyvtár, fájl)
-	@return false ha nincs tartalma, egyébként true
+	@return false, ha nincs tartalma
+	@return true, egyébként
 	*/
 	bool hasChild();
 	/**
 	@brief megkísérel kitörölni adott nevû alkönyvtárat
 	@param dirName a törlendõ könyvtár neve
 	@param recursive true, ha rekurzívan szeretnénk törölni \n egyébként false
-	@return true ha sikeres a törlés, egyébként hibát dob
-	@throws runtime_error("Directory is not empty!") ha nem üres a könyvtár és nem rekurzívan törlünk \n runtime_error("File or directory does not exist!") ha nem létezik adott nevû könyvtár
+	@return true, ha sikeres a törlés
+	@return hibát dob, egyébként
+	@throws runtime_error("Directory_is_not_empty!") ha nem üres a könyvtár és nem rekurzívan törlünk
+	@throws runtime_error("File_or_directory_does_not_exist!") ha nem létezik adott nevû könyvtár
 	*/
 	bool remove(string dirName, bool recursive);
 };
